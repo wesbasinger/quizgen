@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+var api = require('./db/api');
+
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser());
@@ -18,6 +20,10 @@ app.get('/', function(req, res) {
 app.post('/', function(req, res) {
 	if(!req.body.email && !req.body.password) {
 		res.send({success: false});
+	} else {
+		api.getUser({email: req.body.email, password: req.body.password}, function(doc) {
+			console.log(doc);
+		});
 	}
 });
 
