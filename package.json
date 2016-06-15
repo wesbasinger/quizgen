@@ -4,7 +4,11 @@
   "description": "A more server side oriented solution to custom math quizzes.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "prestart": "grunt & mocha",
+    "start": "node app.js",
+    "predev": "grunt & mocha",
+    "dev": "node-dev app.js"
   },
   "keywords": [
     "quiz",
@@ -16,5 +20,13 @@
   "private": true,
   "dependencies": {
     "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.5.3",
+    "node-dev": "^3.1.3"
   }
 }
