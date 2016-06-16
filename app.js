@@ -37,6 +37,10 @@ app.get('/quizzes', function(req, res) {
 	});
 });
 
+app.get('/quiz/:slug', function(req, res) {
+	res.send("You found quiz " + req.params.slug);
+});
+
 app.listen(3000);
 console.log("App running at port 3000...");
 
