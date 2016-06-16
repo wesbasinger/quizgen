@@ -44,6 +44,10 @@ app.get('/quiz/:slug', function(req, res) {
 	});
 });
 
+app.post('/quiz/:slug/email/:email', function(req, res) {
+	res.send(`succe post: got your email ${req.params.email}`);
+});
+
 app.listen(3000);
 console.log("App running at port 3000...");
 
