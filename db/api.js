@@ -54,8 +54,10 @@ module.exports = {
             console.log(err);
           } else {
             var results = {};
+            results.slug = passedSlug;
             results.numQuestions = doc.questions.length; //works
             results.numCorrect = 0; // works
+            results.timestamp = new Date();
             for (var i=0; i<results.numQuestions; i++) {
               var currQuestionText = doc.questions[i].text; //
               var currAnswer = doc.questions[i].answer; //
@@ -70,6 +72,16 @@ module.exports = {
             callback(results);
           }
         });
+      }
+    });
+  },
+  pushResults: function(passedEmail, results, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('users').update({email: passedEmail},{"$push":{results:results}});
+        callback();
       }
     });
   }

@@ -45,9 +45,15 @@ app.get('/quiz/:slug', function(req, res) {
 });
 
 app.post('/quiz/:slug/email/:email', function(req, res) {
-	api.gradeQuiz(req.params.slug, req.body, function(result) {
-		res.json(result);
+	api.gradeQuiz(req.params.slug, req.body, function(passedResult) {
+		api.pushResults(req.params.email, passedResult, function() {
+			res.redirect('/results/email/'+req.params.email);
+		});
 	});
+});
+
+app.get('/results/email/:email', function(req, res) {
+	res.send(`Hello ${req.params.email} you are at the results page.`);
 });
 
 app.listen(3000);
