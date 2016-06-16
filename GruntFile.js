@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		jshint: {
-			files: ['*.js'],
+			files: ['*.js', './db/*.js'],
 			options: {
 				esnext: true
 			}
