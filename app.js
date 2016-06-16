@@ -33,7 +33,7 @@ app.post('/', function(req, res) {
 
 app.get('/quizzes', function(req, res) {
 	api.getQuizzes(function(docs) {
-		res.render('quizzes', {data:docs});
+		res.render('quizzes', {data:docs, email:req.query.email});
 	});
 });
 
