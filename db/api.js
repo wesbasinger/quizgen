@@ -84,5 +84,20 @@ module.exports = {
         callback();
       }
     });
+  },
+  getResults: function(passedEmail, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('users').findOne({email:passedEmail}, function(err, doc) {
+          if (err) {
+            console.log(err);
+          } else {
+            callback(doc['results']);
+          }
+        });
+      }
+    })
   }
 };
