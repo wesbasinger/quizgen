@@ -43,5 +43,34 @@ module.exports = {
         });
       }
     });
+  },
+  gradeQuiz: function(passedSlug, submissions, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('quizzes').findOne({slug:passedSlug}, function(err, doc) {
+          if (err) {
+            console.log(err)
+          } else {
+            var results = {};
+            results.numQuestions = doc.questions.length; //works
+            results.numCorrect = 0; // works
+            for (var i=0; i<results.numQuestions; i++) {
+              var currQuestionText = doc.questions[i].text; //
+              var currAnswer = doc.questions[i].answer; //
+              if (currAnswer==submissions[currQuestionText]) {
+                results.numCorrect += 1;
+                results[currQuestionText] = "correct";
+              } else {
+                results[currQuestionText] = "incorrect";
+              }
+            };
+            results.percentage = (results.numCorrect / results.numQuestions)*100;
+            callback(results);
+          }
+        });
+      }
+    });
   }
 };
