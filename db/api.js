@@ -51,7 +51,7 @@ module.exports = {
       } else {
         db.collection('quizzes').findOne({slug:passedSlug}, function(err, doc) {
           if (err) {
-            console.log(err)
+            console.log(err);
           } else {
             var results = {};
             results.numQuestions = doc.questions.length; //works
@@ -65,7 +65,7 @@ module.exports = {
               } else {
                 results[currQuestionText] = "incorrect";
               }
-            };
+            }
             results.percentage = (results.numCorrect / results.numQuestions)*100;
             callback(results);
           }
