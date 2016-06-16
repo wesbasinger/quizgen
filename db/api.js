@@ -14,4 +14,19 @@ module.exports = {
       }
     });
   },
+  getQuizzes: function(callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('quizzes').find({}).toArray(function(err, docs) {
+          if (err) {
+            console.log(err);
+          } else {
+            callback(docs);
+          }
+        });
+      }
+    });
+  }
 }
