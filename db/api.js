@@ -28,5 +28,20 @@ module.exports = {
         });
       }
     });
+  },
+  getQuiz: function(passedSlug, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('quizzes').findOne({slug:passedSlug}, function(err, doc) {
+          if (err) {
+            console.log(err);
+          } else {
+            callback(doc);
+          }
+        });
+      }
+    });
   }
 }
