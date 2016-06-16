@@ -15,13 +15,20 @@ describe('Basic Routes', function() {
       .send(user)
       .expect({success:false}, done);
   });
-  /*
   it('should be able to return success on POST request', function(done) {
     var user = {email:"wbasinger@villagetechschools.org", password:"password"};
     request(app)
       .post('/')
       .send(user)
-      .expect({success:true}, done);
+      .expect(302).end(done);
   });
-  */
+  it('should redirect to quiz list after successful post request', function(done) {
+    request(app)
+      .post('/')
+      .send({email:"wbasinger@villagetechschools.org", password:"password"})
+      .end(function(err, res) {
+        expect(res.headers).to.be.ok;
+        done();
+      });
+  });
 });
