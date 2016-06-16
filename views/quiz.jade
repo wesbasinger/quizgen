@@ -6,12 +6,12 @@ block title
 block content
   h1 Single Quiz
   p= quiz.description
-  form
+  form(action="/quiz/"+quiz.slug method="POST")
     each question in quiz.questions
       section
         h2= question.text
-        each choice in question.choices
-          input(type="radio" name="question._id" value="question._id")
+        each choice, index in question.choices
+          input(type="radio" name=question.text value=choice)
           label= choice
           br
     input(type="submit" value="Submit")
