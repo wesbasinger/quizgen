@@ -38,7 +38,9 @@ app.get('/quizzes', function(req, res) {
 });
 
 app.get('/quiz/:slug', function(req, res) {
-	res.send("You found quiz " + req.params.slug);
+	api.getQuiz(req.params.slug, function(doc) {
+		res.render('quiz', {quiz:doc});
+	});
 });
 
 app.listen(3000);

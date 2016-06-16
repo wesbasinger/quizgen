@@ -5,3 +5,11 @@ block title
 
 block content
   h1 Single Quiz
+  p= quiz.description
+  section
+    each question in quiz.questions
+      article
+        h2= question.text
+        ul
+          each choice in question.choices
+            li= choice
