@@ -32,14 +32,15 @@ app.post('/', function(req, res) {
 });
 
 app.get('/quizzes', function(req, res) {
+	var email = req.query.email;
 	api.getQuizzes(function(docs) {
-		res.render('quizzes', {data:docs, email:req.query.email});
+		res.render('quizzes', {data:docs, email: email});
 	});
 });
 
 app.get('/quiz/:slug', function(req, res) {
 	api.getQuiz(req.params.slug, function(doc) {
-		res.render('quiz', {quiz:doc});
+		res.render('quiz', {quiz:doc, email:req.query.email});
 	});
 });
 
