@@ -1,0 +1,12 @@
+extends ./layout.jade
+
+block title
+  title Welcome
+
+block content
+  h1 Login
+  form(action="/" method="POST")
+    h2 Email:
+    input(type="text" name="email")
+    h2 Password:
+    input(type="password" name="password")

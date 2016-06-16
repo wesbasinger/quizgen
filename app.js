@@ -4,7 +4,10 @@ var app = express();
 
 var api = require('./db/api');
 
-app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+
+//app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser());
 
@@ -14,12 +17,12 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.end();
+  res.render('index');
 });
 
 app.post('/', function(req, res) {
 	if(!req.body.email && !req.body.password) {
-		res.send({success: false});
+		res.render('index');
 	} else {
 		api.getUser({email: req.body.email, password: req.body.password}, function(doc) {
 			var encodedEmail = encodeURIComponent(req.body.email);
@@ -29,7 +32,7 @@ app.post('/', function(req, res) {
 });
 
 app.get('/quizzes', function(req, res) {
-	res.end(`At the quizzes route.  Logged in as ${req.query.email}`);
+	res.render('quizzes', {email:req.query.email});
 });
 
 app.listen(3000);
