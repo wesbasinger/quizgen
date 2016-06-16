@@ -6,12 +6,14 @@ block title
 block content
   h1 Single Quiz
   p= quiz.description
-  section
+  form
     each question in quiz.questions
-      article
+      section
         h2= question.text
-        ul
-          each choice in question.choices
-            li= choice
+        each choice in question.choices
+          input(type="radio" name="question._id" value="question._id")
+          label= choice
+          br
+    input(type="submit" value="Submit")
   h2 You are logged in as
   p= email
