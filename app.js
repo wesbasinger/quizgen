@@ -45,7 +45,9 @@ app.get('/quiz/:slug', function(req, res) {
 });
 
 app.post('/quiz/:slug/email/:email', function(req, res) {
-	res.send(`succe post: got your email ${req.params.email}`);
+	api.gradeQuiz(req.params.slug, req.body, function(result) {
+		res.json(result);
+	});
 });
 
 app.listen(3000);
