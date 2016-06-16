@@ -22,9 +22,14 @@ app.post('/', function(req, res) {
 		res.send({success: false});
 	} else {
 		api.getUser({email: req.body.email, password: req.body.password}, function(doc) {
-			console.log(doc);
+			var encodedEmail = encodeURIComponent(req.body.email);
+			res.redirect('/quizzes?email=' + encodedEmail);
 		});
 	}
+});
+
+app.get('/quizzes', function(req, res) {
+	res.end(`At the quizzes route.  Logged in as ${req.query.email}`);
 });
 
 app.listen(3000);
