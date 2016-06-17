@@ -15,7 +15,7 @@ app.set('superSecret', config.secret);
 app.use(bodyParser());
 
 app.use(function(req, res, next) {
-	console.log(`${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	console.log(`${req.method} request for '${req.url.slice(0,20)}' - ${JSON.stringify(req.body)}`);
 	next();
 });
 
@@ -40,7 +40,6 @@ app.post('/', function(req, res) {
 
 app.get('/quizzes', function(req, res) {
 	var token = req.query.jwt;
-	console.log(token);
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
@@ -56,23 +55,53 @@ app.get('/quizzes', function(req, res) {
 });
 
 app.get('/quiz/:slug', function(req, res) {
-	api.getQuiz(req.params.slug, function(doc) {
-		res.render('quiz', {quiz:doc, email:req.query.email});
-	});
-});
-
-app.post('/quiz/:slug/email/:email', function(req, res) {
-	api.gradeQuiz(req.params.slug, req.body, function(passedResult) {
-		api.pushResults(req.params.email, passedResult, function() {
-			res.redirect('/results/email/'+req.params.email);
+	var token = req.query.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+				api.getQuiz(req.params.slug, function(doc) {
+					res.render('quiz', {quiz:doc, jwt:token});
+				});
+			}
 		});
-	});
+	}
 });
 
-app.get('/results/email/:email', function(req, res) {
-	api.getResults(req.params.email, function(docs) {
-		res.render('results', {results:docs});
-	});
+app.post('/quiz/:slug/jwt/:jwt', function(req, res) {
+	var token = req.params.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+				api.gradeQuiz(req.params.slug, req.body, function(passedResult) {
+					api.pushResults(decoded.email, passedResult, function() {
+						res.redirect('/results/jwt/'+token);
+					});
+				});
+
+			}
+		});
+	}
+
+});
+
+app.get('/results/jwt/:jwt', function(req, res) {
+	var token = req.params.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+					api.getResults(decoded.email, function(docs) {
+						res.render('results', {results:docs});
+					});
+			}
+		});
+	}
+
 });
 
 app.listen(3000);

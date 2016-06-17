@@ -6,7 +6,7 @@ block title
 block content
   h1 Single Quiz
   p= quiz.description
-  form(action="/quiz/"+quiz.slug+"/email/"+email method="POST")
+  form(action="/quiz/"+quiz.slug+"/jwt/"+jwt method="POST")
     each question in quiz.questions
       section
         h2= question.text
