@@ -1,0 +1,21 @@
+extends ./layout.jade
+
+block title
+  title Results
+
+block content
+  h1 Quiz Grades
+  table
+    tr
+      td Slug
+      td Timestamp
+      td Number of Questions
+      td Number Correct
+      td Percentage
+        each result in results
+          tr
+            td= result.slug
+            td= result.timestamp
+            td= result.numQuestions
+            td= result.numCorrect
+            td= result.percentage

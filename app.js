@@ -53,7 +53,9 @@ app.post('/quiz/:slug/email/:email', function(req, res) {
 });
 
 app.get('/results/email/:email', function(req, res) {
-	res.send(`Hello ${req.params.email} you are at the results page.`);
+	api.getResults(req.params.email, function(docs) {
+		res.render('results', {results:docs});
+	});
 });
 
 app.listen(3000);

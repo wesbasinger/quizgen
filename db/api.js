@@ -94,10 +94,10 @@ module.exports = {
           if (err) {
             console.log(err);
           } else {
-            callback(doc['results']);
+            callback(doc.results);
           }
         });
       }
-    })
+    });
   }
 };
