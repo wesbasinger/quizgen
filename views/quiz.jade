@@ -4,6 +4,10 @@ block title
   title Welcome
 
 block content
+  script(type="text/javascript"
+         async
+         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML")
+  script(type="text/x-mathjax-config") MathJax.Hub.Config({tex2jax: {inlineMath: [['~$','~$'], ['\\(','\\)']]}});
   h1 Single Quiz
   p= quiz.description
   form(action="/quiz/"+quiz.slug+"/jwt/"+jwt method="POST")
