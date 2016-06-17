@@ -39,10 +39,20 @@ app.post('/', function(req, res) {
 });
 
 app.get('/quizzes', function(req, res) {
-	var email = req.query.email;
-	api.getQuizzes(function(docs) {
-		res.render('quizzes', {data:docs, email: email});
-	});
+	var token = req.query.jwt;
+	console.log(token);
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+				var email = decoded.email;
+				api.getQuizzes(function(docs) {
+					res.render('quizzes', {data:docs, email: email});
+				});
+			}
+		});
+	}
 });
 
 app.get('/quiz/:slug', function(req, res) {
