@@ -19,11 +19,11 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res, next) {
   res.render('index');
 });
 
-app.post('/', function(req, res) {
+app.post('/', function(req, res, next) {
 	api.getUser({email: req.body.email}, function(doc) {
 		if (!doc) {
 			res.render('index', {error: "Authentication failed, user not found."});
@@ -38,7 +38,7 @@ app.post('/', function(req, res) {
 	});
 });
 
-app.get('/quizzes', function(req, res) {
+app.get('/quizzes', function(req, res, next) {
 	var token = req.query.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -54,7 +54,7 @@ app.get('/quizzes', function(req, res) {
 	}
 });
 
-app.get('/quiz/:slug', function(req, res) {
+app.get('/quiz/:slug', function(req, res, next) {
 	var token = req.query.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -69,7 +69,7 @@ app.get('/quiz/:slug', function(req, res) {
 	}
 });
 
-app.post('/quiz/:slug/jwt/:jwt', function(req, res) {
+app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -88,7 +88,7 @@ app.post('/quiz/:slug/jwt/:jwt', function(req, res) {
 
 });
 
-app.get('/results/jwt/:jwt', function(req, res) {
+app.get('/results/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -102,6 +102,10 @@ app.get('/results/jwt/:jwt', function(req, res) {
 		});
 	}
 
+});
+
+app.get('*', function(req, res) {
+	res.render('notFound', {error:"I don't know how you got here..."});
 });
 
 app.listen(3000);
