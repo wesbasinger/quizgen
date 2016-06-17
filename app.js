@@ -1,11 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var jwt = require('jsonwebtoken');
 
 var api = require('./db/api');
+var config = require('./db/config');
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.set('superSecret', config.secret);
 
 //app.use(express.static(__dirname + '/public'));
 
@@ -21,14 +24,18 @@ app.get('/', function(req, res) {
 });
 
 app.post('/', function(req, res) {
-	if(!req.body.email && !req.body.password) {
-		res.render('index');
-	} else {
-		api.getUser({email: req.body.email, password: req.body.password}, function(doc) {
-			var encodedEmail = encodeURIComponent(req.body.email);
-			res.redirect('/quizzes?email=' + encodedEmail);
-		});
-	}
+	api.getUser({email: req.body.email}, function(doc) {
+		if (!doc) {
+			res.render('index', {error: "Authentication failed, user not found."});
+		} else if (doc) {
+			if (doc.password != req.body.password) {
+				res.render('index', {error: "Authentication failed, password is not correct."});
+			} else {
+				var token = jwt.sign(doc, app.get('superSecret'));
+				res.redirect('/quizzes?jwt='+token);
+			}
+		}
+	});
 });
 
 app.get('/quizzes', function(req, res) {
