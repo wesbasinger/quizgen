@@ -48,7 +48,7 @@ app.get('/quizzes', function(req, res) {
 			} else {
 				var email = decoded.email;
 				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, email: email});
+					res.render('quizzes', {data:docs, jwt: token});
 				});
 			}
 		});

@@ -8,6 +8,6 @@ block content
   ul
     each val in data
       li
-        a(href='/quiz/'+val.slug+'?email='+email) val.slug
+        a(href='/quiz/'+val.slug+'?jwt='+jwt) val.slug
   h2 Logged in as
   p= email
