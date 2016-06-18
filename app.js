@@ -32,14 +32,14 @@ app.post('/', function(req, res, next) {
 				res.render('index', {error: "Authentication failed, password is not correct."});
 			} else {
 				var token = jwt.sign(doc, app.get('superSecret'));
-				res.redirect('/quizzes?jwt='+token);
+				res.redirect('/quizzes/jwt/'+token);
 			}
 		}
 	});
 });
 
-app.get('/quizzes', function(req, res, next) {
-	var token = req.query.jwt;
+app.get('/quizzes/jwt/:jwt', function(req, res, next) {
+	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
