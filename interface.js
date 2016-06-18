@@ -22,6 +22,10 @@ function createQuiz() {
     var currQuestion = {index:i, choices:[]};
     var questionText = readlineSync.question("What is the text of this question? ");
     currQuestion.text = questionText;
+    if(readlineSync.keyInYN('Do you want to add a caption? ')) {
+      var caption = readlineSync.question("What is the caption? ");
+      currQuestion.caption = caption;
+    }
     var numChoices = readlineSync.question("How many answer choices? ");
     for (var j=0; j < numChoices; j++) {
       var choiceText = readlineSync.question("What is the answer choice? ");
@@ -41,7 +45,7 @@ function deleteQuiz() {
   console.log("Welcome to the deletion portion of the interface.");
   var slug = readlineSync.question("Enter the slug of a quiz you wish to delete. ");
   api.getQuiz(slug, function(doc) {
-    console.log("Is this the quiz you want to delete? ")
+    console.log("Is this the quiz you want to delete? ");
     console.log(JSON.stringify(doc));
     if (readlineSync.keyInYN('Confirm...')) {
       admin.deleteQuiz(slug);
