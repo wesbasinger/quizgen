@@ -51,7 +51,7 @@ function deleteQuiz() {
 
 
 console.log("Welcome to the admin interface.");
-var mainFunctions = ['Create', 'Delete'];
+var mainFunctions = ['Create', 'Delete', 'Grades by Slug'];
 var index = readlineSync.keyInSelect(mainFunctions, "Which function do you want?");
 
 if (mainFunctions[index] == 'Create') {
@@ -63,4 +63,17 @@ if (mainFunctions[index] == 'Create') {
   }
 } else if (mainFunctions[index] == 'Delete') {
   deleteQuiz();
+  process.exit();
+} else if (mainFunctions[index] == 'Grades by Slug') {
+  var slug = readlineSync.question("Which slug do you want to run grades for? ");
+  var re = /^w\d*d\d*$/;
+  if (re.test(slug) === false) {
+    console.log("Nope, not a valid slug.");
+    process.exit(0);
+  } else {
+    admin.getGradesBySlug(slug, function(docs) {
+      console.log(docs);
+      process.exit();
+    });
+  }
 }
