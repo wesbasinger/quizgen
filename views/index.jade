@@ -1,16 +1,13 @@
 extends ./layout.jade
 
-head
-  link(rel="stylesheet" href="../assets/signin.css")
-
 block title
-  title Welcome
+  title Login
 
 block content
-  form(class="form-signin" action="/" method="POST")
-    h2(class="form-signin-heading") Please sign in
-    label(for="inputEmail" class="sr-only") Email address
-    input(id="inputEmail" type="email" name="email" class="form-control" required autofocus)
-    label(for="inputPassword" class="sr-only") Password
-    input(type="password" id="inputPassword" name="password" class="form-control" required)
-    button(class="btn btn-lg btn-primary btn-block" type="submit") Sign In
+  form(action="/" method="POST")
+    h2 Sign In
+    label(for="inputEmail") Email Address
+    input(id="inputEmail" type="email" name="email" required autofocus)
+    label(for="inputPassword") Password
+    input(type="password" id="inputPassword" name="password" required)
+    button(type="submit") Sign In
