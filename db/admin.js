@@ -42,5 +42,25 @@ module.exports = {
         db.collection('quizzes').deleteOne({slug:passedSlug});
       }
     });
+  },
+  getGradesBySlug: function(passedSlug, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('users')
+        .aggregate([
+          {$unwind:"$results"},
+          {$match:{"results.slug":"w1d1"}},
+          {$group:{_id:"$email", score:{$max:"$results.percentage"}}}
+        ]).toArray(function(err, docs) {
+          if (err) {
+            console.log(err);
+          } else {
+            callback(docs);
+          }
+        });
+      }
+    });
   }
 };
