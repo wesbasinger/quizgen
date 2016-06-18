@@ -29,9 +29,18 @@ module.exports = {
         if (!quizDocument.slug || quizDocument.questions.length < 1) {
           return null;
         } else {
-          db.collection('quizzes').insertQuiz(quizDocument);
+          db.collection('quizzes').insertOne(quizDocument);
         }
       }
     });
+  },
+  deleteQuiz: function(passedSlug) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('quizzes').deleteOne({slug:passedSlug});
+      }
+    });
   }
-}
+};
