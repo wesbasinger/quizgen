@@ -1,5 +1,5 @@
 {
-  "name": "server-bee",
+  "name": "quizgen",
   "version": "0.1.0",
   "description": "A more server side oriented solution to custom math quizzes.",
   "main": "app.js",
@@ -8,7 +8,8 @@
     "prestart": "grunt",
     "start": "node app.js",
     "predev": "grunt",
-    "dev": "node-dev app.js"
+    "dev": "node-dev app.js",
+    "interface": "node interface.js"
   },
   "keywords": [
     "quiz",
