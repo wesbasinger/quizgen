@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var api = require('./db/api');
 var config = require('./db/config');
 
+var port = process.env.PORT || 8080;
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.set('superSecret', config.secret);
