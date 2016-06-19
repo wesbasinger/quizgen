@@ -54,8 +54,8 @@ app.get('/quizzes/jwt/:jwt', function(req, res, next) {
 	}
 });
 
-app.get('/quiz/:slug', function(req, res, next) {
-	var token = req.query.jwt;
+app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
+	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {

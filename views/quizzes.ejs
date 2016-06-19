@@ -23,7 +23,7 @@
           <div class="col-sm-8">
             <ul>
               <% data.forEach(function(quiz) { %>
-                <li><%= quiz.slug %></li>
+                <li><a href="/quiz/<%= quiz.slug %>/jwt/<%=jwt%>"><%= quiz.slug %></a></li>
               <% }); %>
             </ul>
           </div>
