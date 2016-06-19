@@ -128,7 +128,7 @@ app.get('*', function(req, res) {
 	res.render('notFound', {error:"I don't know how you got here..."});
 });
 
-app.listen(3000);
+app.listen(port);
 console.log("App running at port 3000...");
 
 module.exports = app;
