@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha",
-    "prestart": "grunt",
     "start": "node app.js",
     "predev": "grunt",
     "dev": "node-dev app.js",
