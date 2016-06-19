@@ -99,5 +99,16 @@ module.exports = {
         });
       }
     });
+  },
+  makeUser: function(newUserObj, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if (err) {
+        console.log(err);
+      } else {
+        db.collection('users').insertOne(newUserObj, function(err, result) {
+          callback();
+        });
+      }
+    });
   }
 };
