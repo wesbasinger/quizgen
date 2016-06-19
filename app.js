@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', {jwt:null});
 });
 
 app.post('/', function(req, res, next) {
@@ -96,7 +96,7 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 					api.getResults(decoded.email, function(docs) {
-						res.render('results', {results:docs});
+						res.render('results', {results:docs, jwt:token});
 					});
 			}
 		});
