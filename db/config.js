@@ -1,4 +1,4 @@
 module.exports = {
-  uri: "mongodb://localhost:27017/quizgen",
+  uri:  "mongodb://admin:annie510@ds021922.mlab.com:21922/quizgen",
   secret: "whattheheck"
 };

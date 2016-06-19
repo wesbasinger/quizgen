@@ -9,13 +9,7 @@ describe('Basic Routes', function() {
     request(app).get('/').expect(200).end(done);
   });
 
-  it('should return false on success with no info posted', function(done) {
-    var user = {email:null, password:null};
-    request(app)
-      .post('/')
-      .send(user)
-      .expect(302).end(done);
-  });
+
   it('should be able to return success on POST request', function(done) {
     var user = {email:"wbasinger@villagetechschools.org", password:"password"};
     request(app)
