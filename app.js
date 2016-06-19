@@ -7,7 +7,7 @@ var api = require('./db/api');
 var config = require('./db/config');
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.set('superSecret', config.secret);
 
 app.use(express.static(__dirname + '/assets'));
