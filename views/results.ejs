@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>Quiz Results</h1>
+        </div>
+        <div class="row">
+        <div class="col-sm-8">
+          <table>
+            <tr>
+              <td>Link</td>
+              <td>Timestamp</td>
+              <td>Number of Questions</td>
+              <td>Number Correct</td>
+              <td>Percentage</td>
+            </tr>
+            <% results.forEach(function(result) { %>
+              <tr>
+                <td><%= result.slug %></td>
+                <td><%= result.timestamp %></td>
+                <td><%= result.numQuestions %></td>
+                <td><%= result.numCorrect %></td>
+                <td><%= result.percentage %></td>
+              </tr>
+            <% }); %>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+</body>
+</html>
