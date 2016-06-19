@@ -26,7 +26,7 @@ app.get('/', function(req, res, next) {
 app.post('/', function(req, res, next) {
 	api.getUser({email: req.body.email}, function(doc) {
 		if (!doc) {
-			res.render('index', {error: "Authentication failed, user not found."});
+			res.render('index', {error: "Authentication failed, user not found.", jwt:null});
 		} else if (doc) {
 			if (doc.password != req.body.password) {
 				res.render('index', {error: "Authentication failed, password is not correct."});
@@ -47,7 +47,7 @@ app.get('/quizzes/jwt/:jwt', function(req, res, next) {
 			} else {
 				var email = decoded.email;
 				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, jwt: token, error:null});
+					res.render('quizzes', {data:docs, jwt:token, error:null});
 				});
 			}
 		});
@@ -105,7 +105,7 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 });
 
 app.get('/register', function(req, res, next) {
-	res.render('register', {error:null});
+	res.render('register', {error:null, jwt:null});
 });
 
 app.post('/register', function(req, res, next) {
