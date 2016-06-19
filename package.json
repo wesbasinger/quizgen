@@ -22,8 +22,8 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "chai": "^3.5.0",
+    "ejs": "^2.4.2",
     "express": "^4.13.4",
-    "jade": "^1.11.0",
     "jsonwebtoken": "^7.0.1",
     "mongodb": "^2.1.18",
     "readline-sync": "^1.4.4"
