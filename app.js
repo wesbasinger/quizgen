@@ -26,7 +26,7 @@ app.get('/', function(req, res, next) {
 app.post('/', function(req, res, next) {
 	api.getUser({email: req.body.email}, function(doc) {
 		if (!doc) {
-			res.render('index', {error: "Authentication failed, user not found.", jwt:null});
+			res.render('index', {error: "Authentication failed, user not found."});
 		} else if (doc) {
 			if (doc.password != req.body.password) {
 				res.render('index', {error: "Authentication failed, password is not correct."});
@@ -47,7 +47,7 @@ app.get('/quizzes/jwt/:jwt', function(req, res, next) {
 			} else {
 				var email = decoded.email;
 				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, jwt:token, error:null});
+					res.render('quizzes', {data:docs, jwt:token, error:null, email: email});
 				});
 			}
 		});
@@ -62,7 +62,7 @@ app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 				api.getQuiz(req.params.slug, function(doc) {
-					res.render('quiz', {quiz:doc, jwt:token, error:null});
+					res.render('quiz', {quiz:doc, jwt:token, error:null, email: decoded.email});
 				});
 			}
 		});
@@ -96,7 +96,7 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 					api.getResults(decoded.email, function(docs) {
-						res.render('results', {results:docs, jwt:token, error:null});
+						res.render('results', {results:docs, jwt:token, error:null, email: decoded.email});
 					});
 			}
 		});
