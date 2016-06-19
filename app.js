@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-  res.render('index', {jwt:null});
+  res.render('index', {jwt:null, error: null});
 });
 
 app.post('/', function(req, res, next) {
@@ -47,7 +47,7 @@ app.get('/quizzes/jwt/:jwt', function(req, res, next) {
 			} else {
 				var email = decoded.email;
 				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, jwt: token});
+					res.render('quizzes', {data:docs, jwt: token, error:null});
 				});
 			}
 		});
@@ -62,7 +62,7 @@ app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 				api.getQuiz(req.params.slug, function(doc) {
-					res.render('quiz', {quiz:doc, jwt:token});
+					res.render('quiz', {quiz:doc, jwt:token, error:null});
 				});
 			}
 		});
@@ -96,7 +96,7 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 					api.getResults(decoded.email, function(docs) {
-						res.render('results', {results:docs, jwt:token});
+						res.render('results', {results:docs, jwt:token, error:null});
 					});
 			}
 		});
@@ -105,7 +105,21 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 });
 
 app.get('/register', function(req, res, next) {
-	res.render('register');
+	res.render('register', {error:null});
+});
+
+app.post('/register', function(req, res, next) {
+	if(req.body.password !== req.body.confirmPassword) {
+		res.render('register', {error:"Passwords do not match!"});
+	} else {
+		api.makeUser(
+			{
+				email:req.body.email,
+				password:req.body.password,
+				createdDate: new Date()}, function() {
+					res.redirect('/');
+				});
+	}
 });
 
 app.get('*', function(req, res) {
