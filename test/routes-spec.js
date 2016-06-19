@@ -14,7 +14,7 @@ describe('Basic Routes', function() {
     request(app)
       .post('/')
       .send(user)
-      .expect(200).end(done);
+      .expect(302).end(done);
   });
   it('should be able to return success on POST request', function(done) {
     var user = {email:"wbasinger@villagetechschools.org", password:"password"};

@@ -11,15 +11,16 @@
 
     <main>
         <div class="jumbotron">
-            <h1>Sign In</h1>
-            <form action="/" method="post">
+            <h1>Register</h1>
+            <form action="/register" method="post">
               <label for="inputEmail">Email</label>
               <input type="email" name="email" id="inputEmail" required autofocus>
               <label for="inputPassword">Password</label>
               <input type="password" name="password" required>
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" name="confirm-password" required>
               <button type="submit">Submit</button>
             </form>
-            <h3><a href="/register">Register as a new user.</a></h3>
         </div>
     </main>
 

@@ -104,6 +104,10 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 
 });
 
+app.get('/register', function(req, res, next) {
+	res.render('register');
+});
+
 app.get('*', function(req, res) {
 	res.render('notFound', {error:"I don't know how you got here..."});
 });
