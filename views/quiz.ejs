@@ -30,8 +30,9 @@
             </p>
             <form action="/quiz/<%=quiz.slug%>/jwt/<%=jwt%>" method="post">
               <% quiz.questions.forEach(function(question) { %>
-                <section>
+                <section class="well well-lg">
                   <h2><%= question.text %></h2>
+                  <h3><%= question.caption %></h3>
                   <% question.choices.forEach(function(choice) { %>
                     <input type="radio" name="<%=question.text%>" value="<%=choice%>">
                     <label><%= choice %></label>
@@ -39,7 +40,7 @@
                   <% }); %>
                 </section>
               <% }); %>
-              <input type="submit" value="Submit">
+              <button class="btn btn-large"type="submit" value="Submit">Submit</button>
             </form>
           </div>
         </div>
