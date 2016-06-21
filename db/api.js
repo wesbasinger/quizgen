@@ -90,13 +90,22 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        db.collection('users').findOne({email:passedEmail}, function(err, doc) {
-          if (err) {
-            console.log(err);
-          } else {
-            callback(doc.results);
-          }
-        });
+        db.collection('users')
+        .aggregate([
+          {$match:{email:"wbasinger@villagetechschools.org"}},
+          {$unwind:"$results"},
+          {$project:
+            {
+              _id:0,
+              slug:"$results.slug",
+              numQuestions:"$results.numQuestions",
+              numCorrect:"$results.numCorrect",
+              percentage:"$results.percentage",
+              timestamp:"$results.timestamp"}},
+          {$limit:10},
+          {$sort:{timestamp:-1}}]).toArray(function(err, docs) {
+            callback(docs);
+          });
       }
     });
   },

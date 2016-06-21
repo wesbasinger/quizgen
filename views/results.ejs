@@ -11,12 +11,12 @@
 
     <main>
         <div class="jumbotron">
-            <h1>Quiz Results</h1>
+            <h1>Recent Quizzes Taken</h1>
         </div>
         <% if (locals.results) { %>
         <div class="row">
         <div class="col-sm-8">
-          <table>
+          <table class="table table-hover">
             <tr>
               <td>Link</td>
               <td>Timestamp</td>
@@ -26,8 +26,11 @@
             </tr>
             <% results.forEach(function(result) { %>
               <tr>
-                <td><%= result.slug %></td>
-                <td><%= result.timestamp %></td>
+                <td><a href="/quiz/<%=result.slug%>/jwt/<%=jwt%>"><%=result.slug.toUpperCase()%></a></td>
+                <td><%= result.timestamp.toLocaleTimeString("en-us", {
+                          weekday: "long", year: "numeric", month: "short",
+                          day: "numeric", hour: "2-digit", minute: "2-digit"
+                      }) %></td>
                 <td><%= result.numQuestions %></td>
                 <td><%= result.numCorrect %></td>
                 <td><%= result.percentage %></td>

@@ -21,11 +21,22 @@
         </div>
         <div class="row">
           <div class="col-sm-8">
-            <ul>
+            <table class="table table-hover">
+              <tr>
+                <td>Link</td>
+                <td>Description</td>
+                <td>Creation Date</td>
+                <td>Number of Questions</td>
+              </tr>
               <% data.forEach(function(quiz) { %>
-                <li><a href="/quiz/<%= quiz.slug %>/jwt/<%=jwt%>"><%= quiz.slug %></a></li>
+                <tr>
+                  <td><a href="/quiz/<%= quiz.slug %>/jwt/<%=jwt%>"><%= quiz.slug.toUpperCase() %></a></td>
+                  <td><%=quiz.description%></td>
+                  <td><%=quiz.createdDate%></td>
+                  <td><%=quiz.questions.length%></td>
+                </tr>
               <% }); %>
-            </ul>
+            </table>
           </div>
         </div>
     </main>
