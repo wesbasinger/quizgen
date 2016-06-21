@@ -58,6 +58,12 @@ module.exports = {
             results.numQuestions = doc.questions.length; //works
             results.numCorrect = 0; // works
             results.timestamp = new Date();
+            results.dateHash = results.timestamp.getYear().toString() + // make a date hash
+              results.timestamp.getMonth().toString() +
+              results.timestamp.getDay().toString() +
+              results.timestamp.getHours().toString() +
+              results.timestamp.getMinutes().toString() +
+              results.timestamp.getSeconds().toString();
             for (var i=0; i<results.numQuestions; i++) {
               var currQuestionText = doc.questions[i].text; //
               var currAnswer = doc.questions[i].answer; //
@@ -101,7 +107,8 @@ module.exports = {
               numQuestions:"$results.numQuestions",
               numCorrect:"$results.numCorrect",
               percentage:"$results.percentage",
-              timestamp:"$results.timestamp"}},
+              timestamp:"$results.timestamp",
+              dateHash: "$results.dateHash"}},
           {$limit:10},
           {$sort:{timestamp:-1}}]).toArray(function(err, docs) {
             callback(docs);
@@ -116,6 +123,24 @@ module.exports = {
       } else {
         db.collection('users').insertOne(newUserObj, function(err, result) {
           callback();
+        });
+      }
+    });
+  },
+  deleteResult: function(passedEmail, passedDateHash, callback) {
+    MongoClient.connect(config.uri, function(err, db) {
+      if(err) {
+        console.log(err);
+      } else {
+        db.collection('users').update(
+          {email:passedEmail},
+          {$pull:{results:{dateHash:passedDateHash}}},
+          {multi:false}, function(err, result) {
+            if(err) {
+              console.log(err);
+            } else {
+              callback();
+            }
         });
       }
     });

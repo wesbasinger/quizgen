@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var api = require('./db/api');
 var config = require('./db/config');
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -123,6 +123,22 @@ app.post('/register', function(req, res, next) {
 				});
 	}
 });
+
+app.get('/delete/:dateHash/jwt/:jwt', function(req, res, next) {
+	var token = req.params.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+					api.deleteResult(decoded.email, req.params.dateHash, function(){
+						res.redirect('/results/jwt/'+token);
+					});
+			}
+		});
+	}
+
+})
 
 app.get('*', function(req, res) {
 	res.render('notFound', {error:"I don't know how you got here..."});

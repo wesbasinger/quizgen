@@ -23,6 +23,7 @@
               <td>Number of Questions</td>
               <td>Number Correct</td>
               <td>Percentage</td>
+              <td>Delete</td>
             </tr>
             <% results.forEach(function(result) { %>
               <tr>
@@ -34,6 +35,7 @@
                 <td><%= result.numQuestions %></td>
                 <td><%= result.numCorrect %></td>
                 <td><%= result.percentage %></td>
+                <td><a href="/delete/<%=result.dateHash%>/jwt/<%=jwt%>">Delete</a></td>
               </tr>
             <% }); %>
           </table>
