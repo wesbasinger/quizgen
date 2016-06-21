@@ -8,8 +8,7 @@
     "start": "node app.js",
     "predev": "grunt",
     "dev": "node-dev app.js",
-    "interface": "node interface.js",
-    "postinstall": "grunt"
+    "interface": "node interface.js"
   },
   "keywords": [
     "quiz",
