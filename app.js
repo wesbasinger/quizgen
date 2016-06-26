@@ -8,11 +8,9 @@ var config = require('./db/config');
 
 var port = process.env.PORT || 3000;
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 app.set('superSecret', config.secret);
 
-app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser());
 
@@ -22,9 +20,10 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-  res.render('index', {jwt:null, error: null});
+  res.sendFile('/public/index.html');
 });
 
+/*
 app.post('/', function(req, res, next) {
 	api.getUser({email: req.body.email}, function(doc) {
 		if (!doc) {
@@ -143,6 +142,7 @@ app.get('/delete/:dateHash/jwt/:jwt', function(req, res, next) {
 app.get('*', function(req, res) {
 	res.render('notFound', {error:"I don't know how you got here..."});
 });
+*/
 
 app.listen(port);
 console.log("App running at port 3000...");
