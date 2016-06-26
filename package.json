@@ -4,10 +4,8 @@
   "description": "Trying this out in React.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "prestart": "mocha && webpack",
     "start": "node app.js",
-    "predev": "grunt",
-    "dev": "node-dev app.js",
     "interface": "node interface.js"
   },
   "keywords": [
@@ -24,9 +22,17 @@
     "express": "^4.13.4",
     "jsonwebtoken": "^7.0.1",
     "mongodb": "^2.1.18",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
     "readline-sync": "^1.4.4"
   },
   "engines": {
     "node": "v4.4.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-react": "^6.5.0",
+    "webpack": "^1.13.1"
   }
 }
