@@ -4,14 +4,11 @@ var Header = React.createClass({
 
   render() {
     return (
-      <header className="row">
-        <div className="col-xs-10">
-          <h1>This is the header...</h1>
-        </div>
-        <div className="col-xs-2">
-          <span>This fills the rest of the span.</span>
-        </div>
-      </header>
+      <nav className="navbar navbar-light bg-faded">
+        <ul className="nav navbar-nav">
+          <li className="nav-item">Home</li>
+        </ul>
+      </nav>
     );
   }
 

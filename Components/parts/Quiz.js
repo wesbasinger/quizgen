@@ -4,9 +4,11 @@ var Quiz = React.createClass({
 
   render() {
     return (
-      <form>
-        <h1>This is a quiz.</h1>
-      </form>
+        <div className="col-md-9">
+          <form>
+            <h1>This is a quiz.</h1>
+          </form>
+        </div>
     )
   }
 

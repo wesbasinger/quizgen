@@ -4,12 +4,12 @@ var QuizList = React.createClass({
 
   render() {
     return (
-      <div>
-      <h1>Quiz List</h1>
-      <ul>
-        <li>List item</li>
-      </ul>
-      </div>
+        <div className="col-md-3">
+          <h1>Quiz List</h1>
+          <ul>
+            <li>List item</li>
+          </ul>
+        </div>
     )
   }
 

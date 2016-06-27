@@ -4,12 +4,13 @@ var Footer = React.createClass({
 
   render() {
     return (
-      <footer>
-        <p>This is a footer...</p>
+      <footer className="footer">
+        <div className="container">
+          <p className="text-muted">This is a footer...</p>
+        </div>
       </footer>
     );
   }
-
 });
 
 module.exports = Footer;

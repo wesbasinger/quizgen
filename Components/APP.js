@@ -10,9 +10,11 @@ var APP = React.createClass({
     return (
       <div>
         <Header />
+        <div className="row">
+          <QuizList />
+          <Quiz />
+        </div>
         <Footer />
-        <QuizList />
-        <Quiz />
       </div>
     );
   }

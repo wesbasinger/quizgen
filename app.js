@@ -11,6 +11,7 @@ var port = process.env.PORT || 3000;
 app.set('superSecret', config.secret);
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 
 app.use(bodyParser());
 
