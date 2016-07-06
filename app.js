@@ -12,7 +12,8 @@ app.set('superSecret', config.secret);
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
 	console.log(`${req.method} request for '${req.url.slice(0,20)}' - ${JSON.stringify(req.body)}`);
