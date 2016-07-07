@@ -13,7 +13,7 @@ var Header = React.createClass({
 							<ul>
 								<li><Link to="/quizzes">Quizzes</Link></li>
 								<li><Link to="/quizzes/dummy">Dummy Quiz</Link></li>
-								<li><Link to="/logout">Logout</Link></li>
+								<li><button onClick={this.props.onLogoutRequest}>Logout</button></li>
 							</ul>
 					</nav>
 				</div>
@@ -36,6 +36,10 @@ var Footer = React.createClass({
 	}
 })
 var App = React.createClass({
+
+	logout() {
+		this.setState({user:"", token:""});
+	},
 
 	handleLoginSubmission(loginObj) {
 		$.ajax({
@@ -65,9 +69,12 @@ var App = React.createClass({
 	render() {
 		return(
 			<div>
-				<Header token={this.state.token} user={this.state.user}/>
+				<Header token={this.state.token} user={this.state.user} onLogoutRequest={this.logout}/>
 				{
-					React.cloneElement(this.props.children, {tokenState: this.state.token, onLoginFormSubmit: this.handleLoginSubmission})}
+					React.cloneElement(this.props.children,
+						{
+							tokenState: this.state.token,
+							onLoginFormSubmit: this.handleLoginSubmission})}
 				<Footer />
 			</div>
 		)
