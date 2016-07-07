@@ -1,4 +1,5 @@
 var React = require('react');
+var $ = require('jquery');
 var Link = require('react-router').Link;
 
 var Header = React.createClass({
@@ -23,13 +24,25 @@ var Footer = React.createClass({
 var App = React.createClass({
 
 	handleLoginSubmission(data) {
-		alert("Data bubbled to the top!" + JSON.stringify(data));
+		$.ajax({
+		  url: "api/login",
+		  dataType: 'json',
+		  type: "POST",
+		  data: {email: data.email, password: data.password},
+		  success: function(data) {
+		    this.setState({token:data.token, errMsg:data.error});
+		  }.bind(this),
+		  error: function(xhr, status, err) {
+		    console.error(status, err.toString());
+		  }.bind(this)
+		});
 	},
 
 	getInitialState() {
 		return {
 			user: "",
-			token: ""
+			token: "",
+			errMsg: ""
 		}
 	},
 

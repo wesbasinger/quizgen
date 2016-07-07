@@ -1,5 +1,4 @@
 var React = require('react');
-var $ = require('jquery');
 
 var Login = React.createClass({
 
@@ -22,20 +21,6 @@ var Login = React.createClass({
     e.preventDefault();
     var email = this.state.formEmail.trim();
     var password = this.state.formPassword.trim();
-
-    // $.ajax({
-    //   url: "api/login",
-    //   dataType: 'json',
-    //   type: "POST",
-    //   data: {email: email, password: password},
-    //   success: function(data) {
-    //     this.setState({token:data.token});
-    //   }.bind(this),
-    //   error: function(xhr, status, err) {
-    //     console.error(status, err.toString());
-    //   }.bind(this)
-    // });
-
     this.props.onLoginFormSubmit({email:email, password:password});
   },
 
@@ -46,7 +31,7 @@ var Login = React.createClass({
         <form onSubmit={this.handleSubmission}>
           <label>Email</label>
           <input
-            type="email"
+            type="text"
             required
             name="email"
             onChange={this.handleEmailChange}
