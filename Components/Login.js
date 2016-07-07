@@ -1,11 +1,13 @@
 var React = require('react');
+var $ = require('jquery');
 
 var Login = React.createClass({
 
   getInitialState() {
     return {
       formEmail: "",
-      formPassword: ""
+      formPassword: "",
+      token: ""
     }
   },
 
@@ -18,7 +20,21 @@ var Login = React.createClass({
   },
 
   handleSubmission(e) {
-    alert("You want to submit your form..")
+    e.preventDefault();
+    var email = this.state.formEmail.trim();
+    var password = this.state.formPassword.trim();
+    $.ajax({
+      url: "api/login",
+      dataType: 'json',
+      type: "POST",
+      data: {email: email, password: password},
+      success: function(data) {
+        this.setState({token:data.token});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
   },
 
   render() {

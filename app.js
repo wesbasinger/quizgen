@@ -24,21 +24,23 @@ app.get('/', function(req, res, next) {
   res.sendFile('/public/index.html');
 });
 
-/*
-app.post('/', function(req, res, next) {
+
+app.post('/api/login', function(req, res, next) {
 	api.getUser({email: req.body.email}, function(doc) {
 		if (!doc) {
-			res.render('index', {error: "Authentication failed, user not found."});
+			res.json({error: "Authentication failed, user not found."});
 		} else if (doc) {
 			if (doc.password != req.body.password) {
-				res.render('index', {error: "Authentication failed, password is not correct."});
+				res.json({error: "Authentication failed, password is not correct."});
 			} else {
 				var token = jwt.sign(doc, app.get('superSecret'));
-				res.redirect('/quizzes/jwt/'+token);
+				res.json({token: token});
 			}
 		}
 	});
 });
+
+/*
 
 app.get('/quizzes/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;

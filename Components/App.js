@@ -24,10 +24,12 @@ var App = React.createClass({
 
 	getInitialState() {
 		return {
-			email: "",
+			user: "",
 			token: ""
 		}
 	},
+
+	
 
 	render() {
 		return(
