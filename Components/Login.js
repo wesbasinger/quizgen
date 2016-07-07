@@ -6,8 +6,7 @@ var Login = React.createClass({
   getInitialState() {
     return {
       formEmail: "",
-      formPassword: "",
-      token: ""
+      formPassword: ""
     }
   },
 
@@ -23,30 +22,43 @@ var Login = React.createClass({
     e.preventDefault();
     var email = this.state.formEmail.trim();
     var password = this.state.formPassword.trim();
-    $.ajax({
-      url: "api/login",
-      dataType: 'json',
-      type: "POST",
-      data: {email: email, password: password},
-      success: function(data) {
-        this.setState({token:data.token});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }.bind(this)
-    });
+
+    // $.ajax({
+    //   url: "api/login",
+    //   dataType: 'json',
+    //   type: "POST",
+    //   data: {email: email, password: password},
+    //   success: function(data) {
+    //     this.setState({token:data.token});
+    //   }.bind(this),
+    //   error: function(xhr, status, err) {
+    //     console.error(status, err.toString());
+    //   }.bind(this)
+    // });
+
+    this.props.onLoginFormSubmit({email:email, password:password});
   },
 
   render() {
     return(
       <div>
         <h1>Please Login to Continue</h1>
-        <form>
+        <form onSubmit={this.handleSubmission}>
           <label>Email</label>
-          <input type="email" required name="email" onChange={this.handleEmailChange}/>
+          <input
+            type="email"
+            required
+            name="email"
+            onChange={this.handleEmailChange}
+            value={this.state.formEmail}/>
           <label>Password</label>
-          <input type="password" required name="password" onChange={this.handlePasswordChange}/>
-          <button onClick={this.handleSubmission}>Submit</button>
+          <input
+            type="password"
+            required
+            name="password"
+            onChange={this.handlePasswordChange}
+            value={this.state.formPassword}/>
+          <input type="submit" value="POST" />
         </form>
       </div>
     )

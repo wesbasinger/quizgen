@@ -22,6 +22,10 @@ var Footer = React.createClass({
 })
 var App = React.createClass({
 
+	handleLoginSubmission(data) {
+		alert("Data bubbled to the top!" + JSON.stringify(data));
+	},
+
 	getInitialState() {
 		return {
 			user: "",
@@ -29,13 +33,15 @@ var App = React.createClass({
 		}
 	},
 
-	
+
 
 	render() {
 		return(
 			<div>
 				<Header />
-				{this.props.children}
+				{this.props.children &&
+					React.cloneElement(
+						this.props.children, {onLoginFormSubmit: this.handleLoginSubmission})}
 				<Footer />
 			</div>
 		)
