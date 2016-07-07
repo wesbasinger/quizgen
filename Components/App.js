@@ -52,9 +52,8 @@ var App = React.createClass({
 		return(
 			<div>
 				<Header />
-				{this.props.children &&
-					React.cloneElement(
-						this.props.children, {onLoginFormSubmit: this.handleLoginSubmission})}
+				{
+					React.cloneElement(this.props.children, {tokenState: this.state.token, onLoginFormSubmit: this.handleLoginSubmission})}
 				<Footer />
 			</div>
 		)
