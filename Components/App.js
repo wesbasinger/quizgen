@@ -21,6 +21,14 @@ var Footer = React.createClass({
 	}
 })
 var App = React.createClass({
+
+	getInitialState() {
+		return {
+			email: "",
+			token: ""
+		}
+	},
+
 	render() {
 		return(
 			<div>
