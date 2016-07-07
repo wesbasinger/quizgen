@@ -11,6 +11,8 @@ var port = process.env.PORT || 3000;
 app.set('superSecret', config.secret);
 
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use(express.static(__dirname + '/node_modules/jquery/dist'));
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -22,6 +24,12 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res, next) {
   res.sendFile('/public/index.html');
+});
+
+app.get('/quizzes', function(req, res, next) {
+		api.getQuizzes(function(docs) {
+			res.json(docs);
+		});
 });
 
 /*
@@ -40,21 +48,6 @@ app.post('/', function(req, res, next) {
 	});
 });
 
-app.get('/quizzes/jwt/:jwt', function(req, res, next) {
-	var token = req.params.jwt;
-	if (token) {
-		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
-			} else {
-				var email = decoded.email;
-				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, jwt:token, error:null, email: email});
-				});
-			}
-		});
-	}
-});
 
 app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
