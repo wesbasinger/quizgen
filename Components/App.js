@@ -37,6 +37,30 @@ var Footer = React.createClass({
 })
 var App = React.createClass({
 
+	getInitialState() {
+		return {
+			user: "",
+			token: "",
+			errMsg: "",
+			quizzes: []
+		}
+	},
+
+	componentDidMount() {
+		$.ajax({
+			url: 'api/quizzes',
+			dataType: 'json',
+			cache: false,
+			success: function(data) {
+				this.setState({quizzes: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(status, err.toString());
+			}.bind(this)
+		});
+	},
+
+
 	logout() {
 		this.setState({user:"", token:""});
 	},
@@ -55,16 +79,6 @@ var App = React.createClass({
 		  }.bind(this)
 		});
 	},
-
-	getInitialState() {
-		return {
-			user: "",
-			token: "",
-			errMsg: ""
-		}
-	},
-
-
 
 	render() {
 		return(

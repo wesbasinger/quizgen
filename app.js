@@ -40,23 +40,14 @@ app.post('/api/login', function(req, res, next) {
 	});
 });
 
-/*
 
-app.get('/quizzes/jwt/:jwt', function(req, res, next) {
-	var token = req.params.jwt;
-	if (token) {
-		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
-			} else {
-				var email = decoded.email;
-				api.getQuizzes(function(docs) {
-					res.render('quizzes', {data:docs, jwt:token, error:null, email: email});
-				});
-			}
-		});
-	}
+app.get('/api/quizzes', function(req, res, next) {
+	api.getQuizzes(function(docs) {
+		res.json(docs);
+	});
 });
+
+/*
 
 app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
