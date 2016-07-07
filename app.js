@@ -47,22 +47,13 @@ app.get('/api/quizzes', function(req, res, next) {
 	});
 });
 
-/*
-
-app.get('/quiz/:slug/jwt/:jwt', function(req, res, next) {
-	var token = req.params.jwt;
-	if (token) {
-		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
-			} else {
-				api.getQuiz(req.params.slug, function(doc) {
-					res.render('quiz', {quiz:doc, jwt:token, error:null, email: decoded.email});
-				});
-			}
-		});
-	}
+app.get('/api/quiz/:slug', function(req, res, next) {
+	api.getQuiz(req.params.slug, function(doc) {
+		res.json(doc);
+	});
 });
+
+/*
 
 app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
