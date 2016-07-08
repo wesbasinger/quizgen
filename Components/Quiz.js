@@ -9,6 +9,7 @@ var Quiz = React.createClass({
 			description: "",
 			createdDate: "",
 			questions: [],
+			submitted: false,
 			responseObj: {}
 		}
 	},
@@ -40,30 +41,41 @@ var Quiz = React.createClass({
 		});
 	},
 
+	handleSubmit(e) {
+		e.preventDefault();
+		this.setState({responseObj: {}, submitted: true})
+	},
+
 	render() {
-		return(
-			<form action="/" method="post">
-				<h1>{this.state.slug.toUpperCase()}</h1>
-				<h2>{this.state.description}</h2>
-				{this.state.questions.map(question => {
-					return(
-						<div key={question.index}>
-							<h2>{question.text}</h2>
-							<h3>{question.caption}</h3>
-							{question.choices.map(choice => {
-								return(
-									<div>
-										<input type="radio" name={question.text} value={choice} onChange={this.handleChange} key={choice}/>
-										<label>{choice}</label>
-									</div>
-								)
-							})}
-						</div>
-					)
-				})}
-				<input type="submit" value="Submit" />
-			</form>
-		)
+		if (this.state.submitted===true) {
+			return(
+				<h1>submitted</h1>
+			)
+		} else {
+			return(
+				<form>
+					<h1>{this.state.slug.toUpperCase()}</h1>
+					<h2>{this.state.description}</h2>
+					{this.state.questions.map(question => {
+						return(
+							<div key={question.index}>
+								<h2>{question.text}</h2>
+								<h3>{question.caption}</h3>
+								{question.choices.map(choice => {
+									return(
+										<div>
+											<input type="radio" name={question.text} value={choice} onChange={this.handleChange} key={choice}/>
+											<label>{choice}</label>
+										</div>
+									)
+								})}
+							</div>
+						)
+					})}
+					<input type="submit" value="Submit" onClick={this.handleSubmit}/>
+				</form>
+			)
+		}
 	}
 })
 
