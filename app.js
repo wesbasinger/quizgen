@@ -53,8 +53,6 @@ app.get('/api/quiz/:slug', function(req, res, next) {
 	});
 });
 
-/*
-
 app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
 	if (token) {
@@ -71,8 +69,9 @@ app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 			}
 		});
 	}
-
 });
+
+/*
 
 app.get('/results/jwt/:jwt', function(req, res, next) {
 	var token = req.params.jwt;

@@ -8,8 +8,17 @@ var Quiz = React.createClass({
 			slug: "",
 			description: "",
 			createdDate: "",
-			questions: []
+			questions: [],
+			responseObj: {}
 		}
+	},
+
+	handleChange(e) {
+		var oldResponseState = this.state.responseObj;
+		var newPair = {};
+		newPair[e.target.name] = e.target.value;
+		var combined = $.extend(oldResponseState, newPair);
+		this.setState({responseObj: combined});
 	},
 
 	componentDidMount() {
@@ -33,18 +42,18 @@ var Quiz = React.createClass({
 
 	render() {
 		return(
-			<form>
+			<form action="/" method="post">
 				<h1>{this.state.slug.toUpperCase()}</h1>
 				<h2>{this.state.description}</h2>
 				{this.state.questions.map(question => {
 					return(
-						<div>
+						<div key={question.index}>
 							<h2>{question.text}</h2>
 							<h3>{question.caption}</h3>
 							{question.choices.map(choice => {
 								return(
 									<div>
-										<input type="radio" name={question.text} value={choice} />
+										<input type="radio" name={question.text} value={choice} onChange={this.handleChange} key={choice}/>
 										<label>{choice}</label>
 									</div>
 								)
@@ -52,6 +61,7 @@ var Quiz = React.createClass({
 						</div>
 					)
 				})}
+				<input type="submit" value="Submit" />
 			</form>
 		)
 	}
