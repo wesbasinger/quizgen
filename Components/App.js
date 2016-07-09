@@ -12,7 +12,7 @@ var Header = React.createClass({
 							Pick from the list
 							<ul>
 								<li><Link to="/quizzes">Quizzes</Link></li>
-								<li><Link to="/quizzes/dummy">Dummy Quiz</Link></li>
+								<li><Link to="/results">Grades</Link></li>
 								<li><button onClick={this.props.onLogoutRequest}>Logout</button></li>
 							</ul>
 					</nav>

@@ -9,6 +9,7 @@ var Quiz = require('./Components/Quiz');
 var Quizzes = require('./Components/Quizzes');
 var App = require('./Components/App');
 var Login = require('./Components/Login');
+var Results = require('./Components/Results');
 
 
 
@@ -18,6 +19,7 @@ ReactDOM.render((
 			<IndexRoute component={Login} />
 			<Route path="/quizzes" component={Quizzes} />
 			<Route path="/quizzes/:quizId" component={Quiz} />
+			<Route path="/results" component={Results} />
 		</Route>
 	</Router>
 ), document.getElementById('react-container'))
