@@ -20,6 +20,7 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "jsonwebtoken": "^7.0.1",
+    "katex": "file:../Downloads/KaTeX-0.5.1.tar.gz",
     "mongodb": "^2.1.18",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",

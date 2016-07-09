@@ -1,5 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
+var katex = require('katex');
 
 
 var Quiz = React.createClass({
@@ -83,6 +84,18 @@ var Quiz = React.createClass({
 		});
 	},
 
+	rawMarkup(expression) {
+		if(expression==null) {
+			return {__html: ""}
+		} else if(expression.charAt(0)==="*"){
+			return {
+				__html: katex.renderToString(expression.slice(1))
+			}
+		} else {
+			return {__html: expression}
+		}
+	},
+
 	render() {
 		if (this.state.submitted===true && this.state.saved===false) {
 			return(
@@ -94,7 +107,9 @@ var Quiz = React.createClass({
 					{this.state.resultObj.pairs.map(pair => {
 						return(
 							<div key={pair.question}>
-								<p>Question: {pair.question}</p>
+								<p>Question:
+									<span dangerouslySetInnerHTML={this.rawMarkup(pair.question)} />
+								</p>
 								<p>Result: {pair.result}</p>
 							</div>
 						)
@@ -114,13 +129,19 @@ var Quiz = React.createClass({
 					{this.state.questions.map(question => {
 						return(
 							<div key={question.index}>
-								<h2>{question.text}</h2>
-								<h3>{question.caption}</h3>
+								<h2>
+									<span dangerouslySetInnerHTML={this.rawMarkup(question.text)} />
+								</h2>
+								<h3>
+									<span dangerouslySetInnerHTML={this.rawMarkup(question.caption)} />
+								</h3>
 								{question.choices.map(choice => {
 									return(
 										<div key={choice}>
 											<input type="radio" name={question.text} value={choice} onChange={this.handleChange}/>
-											<label>{choice}</label>
+											<label>
+												<span dangerouslySetInnerHTML={this.rawMarkup(choice)} />
+											</label>
 										</div>
 									)
 								})}
