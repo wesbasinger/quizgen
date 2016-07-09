@@ -83,9 +83,8 @@ app.post('/api/save/:jwt', function(req, res, next) {
 		});
 	}
 });
-/*
 
-app.get('/results/jwt/:jwt', function(req, res, next) {
+app.get('/api/results/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -93,13 +92,14 @@ app.get('/results/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 					api.getResults(decoded.email, function(docs) {
-						res.render('results', {results:docs, jwt:token, error:null, email: decoded.email});
+						res.json(docs);
 					});
 			}
 		});
 	}
-
 });
+
+/*
 
 app.get('/register', function(req, res, next) {
 	res.render('register', {error:null, jwt:null});
