@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-	console.log(`${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	console.log(`${req.method} request for '${req.url.slice(1,20)}' - ${JSON.stringify(req.body)}`);
 	next();
 });
 
@@ -99,6 +99,21 @@ app.get('/api/results/:jwt', function(req, res, next) {
 	}
 });
 
+app.get('/api/delete/:dateHash/:jwt', function(req, res, next) {
+	var token = req.params.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+					api.deleteResult(decoded.email, req.params.dateHash, function(){
+						res.json({msg:"success"});
+					});
+			}
+		});
+	}
+});
+
 /*
 
 app.get('/register', function(req, res, next) {
@@ -118,22 +133,6 @@ app.post('/register', function(req, res, next) {
 				});
 	}
 });
-
-app.get('/delete/:dateHash/jwt/:jwt', function(req, res, next) {
-	var token = req.params.jwt;
-	if (token) {
-		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
-			} else {
-					api.deleteResult(decoded.email, req.params.dateHash, function(){
-						res.redirect('/results/jwt/'+token);
-					});
-			}
-		});
-	}
-
-})
 */
 
 app.listen(port);

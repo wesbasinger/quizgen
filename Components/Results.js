@@ -24,6 +24,31 @@ var Results = React.createClass({
     });
   },
 
+  handleDelete(e) {
+    var indexToDelete;
+    var dateHash = e.target.value;
+    var currentGrades = this.state.grades;
+    for (var i=0; i < currentGrades.length; i++) {
+      if (currentGrades[i].dateHash === dateHash) {
+        indexToDelete = i;
+      }
+    }
+    //		players.splice(players.indexOf(socket), 1);
+    currentGrades.splice(indexToDelete, 1);
+    this.setState({grades: currentGrades});
+    $.ajax({
+      url: 'api/delete/' + dateHash + '/' + this.props.tokenState,
+      dataType: 'json',
+      method: "GET",
+      success: function(data) {
+        //console.log(data.msg);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(status, err.toString());
+      }.bind(this)
+    });
+  },
+
   render() {
     if (this.state.grades.length === 0) {
       return(
@@ -48,13 +73,13 @@ var Results = React.createClass({
               {this.state.grades.map(grade => {
                 var linkString = "/quizzes/" + grade.slug;
                 return(
-                  <tr>
+                  <tr key={grade.dateHash}>
                     <td><Link to={linkString}>{grade.slug.toUpperCase()}</Link></td>
                     <td>{grade.timestamp}</td>
                     <td>{grade.numQuestions}</td>
                     <td>{grade.numCorrect}</td>
                     <td>{grade.percentage}</td>
-                    <td>Delete</td>
+                    <td><button onClick={this.handleDelete} value={grade.dateHash}>Delete</button></td>
                   </tr>
                 )
               })}
