@@ -10,7 +10,9 @@ var Quiz = React.createClass({
 			createdDate: "",
 			questions: [],
 			submitted: false,
-			responseObj: {}
+			responseObj: {},
+			resultObj: {},
+			saved: false
 		}
 	},
 
@@ -43,13 +45,65 @@ var Quiz = React.createClass({
 
 	handleSubmit(e) {
 		e.preventDefault();
+		$.ajax({
+			url: 'api/quiz/' + this.props.params.quizId + '/' + this.props.tokenState,
+			dataType: 'json',
+			method: "POST",
+			data: this.state.responseObj,
+			success: function(data) {
+				this.setState({resultObj: data});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(status, err.toString());
+			}.bind(this)
+		});
 		this.setState({responseObj: {}, submitted: true})
 	},
 
+	handleSaveResult(e) {
+		$.ajax({
+			url: 'api/save/' + this.props.tokenState,
+			dataType: 'json',
+			method: "POST",
+			data: {
+				dateHash: this.state.resultObj.dateHash,
+				numCorrect: this.state.resultObj.numCorrect,
+				numQuestions: this.state.resultObj.numQuestions,
+				percentage: this.state.resultObj.percentage,
+				slug: this.state.resultObj.slug,
+				timestamp: this.state.resultObj.timestamp
+			},
+			success: function(data) {
+				this.setState({saved: true});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(status, err.toString());
+			}.bind(this)
+		});
+	},
+
 	render() {
-		if (this.state.submitted===true) {
+		if (this.state.submitted===true && this.state.saved===false) {
 			return(
-				<h1>submitted</h1>
+				<div>
+					<h1>Results for {this.state.resultObj.slug.toUpperCase()}</h1>
+					<h2>Submitted on {this.state.resultObj.timestamp}</h2>
+					<p>Number of Questions: {this.state.resultObj.numQuestions}</p>
+					<p>Number Correct: {this.state.resultObj.numCorrect}</p>
+					{this.state.resultObj.pairs.map(pair => {
+						return(
+							<div>
+								<p>Question: {pair.question}</p>
+								<p>Result: {pair.result}</p>
+							</div>
+						)
+					})}
+					<button onClick={this.handleSaveResult}>Save Result</button>
+				</div>
+			)
+		} else if (this.state.submitted===true && this.state.saved===true) {
+			return(
+				<h1>Quiz results saved!!!</h1>
 			)
 		} else {
 			return(

@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-	console.log(`${req.method} request for '${req.url.slice(0,20)}' - ${JSON.stringify(req.body)}`);
+	console.log(`${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
 	next();
 });
 
@@ -53,7 +53,7 @@ app.get('/api/quiz/:slug', function(req, res, next) {
 	});
 });
 
-app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
+app.post('/api/quiz/:slug/:jwt', function(req, res, next) {
 	var token = req.params.jwt;
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -61,9 +61,7 @@ app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 				res.render('notFound', {error: "Failed to authenicate token."});
 			} else {
 				api.gradeQuiz(req.params.slug, req.body, function(passedResult) {
-					api.pushResults(decoded.email, passedResult, function() {
-						res.redirect('/results/jwt/'+token);
-					});
+					res.json(passedResult);
 				});
 
 			}
@@ -71,6 +69,20 @@ app.post('/quiz/:slug/jwt/:jwt', function(req, res, next) {
 	}
 });
 
+app.post('/api/save/:jwt', function(req, res, next) {
+	var token = req.params.jwt;
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+			if (err) {
+				res.render('notFound', {error: "Failed to authenicate token."});
+			} else {
+				api.pushResults(decoded.email, req.body, function() {
+					res.json({msg: "success"});
+				});
+			}
+		});
+	}
+});
 /*
 
 app.get('/results/jwt/:jwt', function(req, res, next) {
@@ -122,10 +134,6 @@ app.get('/delete/:dateHash/jwt/:jwt', function(req, res, next) {
 	}
 
 })
-
-app.get('*', function(req, res) {
-	res.render('notFound', {error:"I don't know how you got here..."});
-});
 */
 
 app.listen(port);

@@ -64,15 +64,19 @@ module.exports = {
               results.timestamp.getHours().toString() +
               results.timestamp.getMinutes().toString() +
               results.timestamp.getSeconds().toString();
+            results.pairs = [];
             for (var i=0; i<results.numQuestions; i++) {
+              var currObj = {};
               var currQuestionText = doc.questions[i].text; //
+              currObj["question"] = currQuestionText;
               var currAnswer = doc.questions[i].answer; //
               if (currAnswer==submissions[currQuestionText]) {
                 results.numCorrect += 1;
-                results[currQuestionText] = "correct";
+                currObj["result"] = "correct";
               } else {
-                results[currQuestionText] = "incorrect";
+                currObj["result"] = "incorrect";
               }
+              results.pairs.push(currObj);
             }
             results.percentage = (results.numCorrect / results.numQuestions)*100;
             callback(results);
@@ -86,8 +90,9 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        db.collection('users').update({email: passedEmail},{"$push":{results:results}});
-        callback();
+        db.collection('users').update({email: passedEmail},{"$push":{results:results}}, function() {
+          callback();
+        });
       }
     });
   },
