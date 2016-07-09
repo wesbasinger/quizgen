@@ -4,55 +4,29 @@ var $ = require('jquery');
 
 var Results = React.createClass({
 
-  getInitialState() {
+  getDefaultProps() {
     return {
       grades: []
     }
   },
 
-  componentDidMount() {
-    $.ajax({
-      url: 'api/results/' + this.props.tokenState,
-      dataType: 'json',
-      method: "GET",
-      success: function(data) {
-        this.setState({grades: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }.bind(this)
-    });
-  },
-
   handleDelete(e) {
     var indexToDelete;
     var dateHash = e.target.value;
-    var currentGrades = this.state.grades;
+    var currentGrades = this.props.grades;
     for (var i=0; i < currentGrades.length; i++) {
       if (currentGrades[i].dateHash === dateHash) {
         indexToDelete = i;
       }
     }
-    //		players.splice(players.indexOf(socket), 1);
     currentGrades.splice(indexToDelete, 1);
-    this.setState({grades: currentGrades});
-    $.ajax({
-      url: 'api/delete/' + dateHash + '/' + this.props.tokenState,
-      dataType: 'json',
-      method: "GET",
-      success: function(data) {
-        //console.log(data.msg);
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(status, err.toString());
-      }.bind(this)
-    });
+    this.props.onDeleteRequest(dateHash);
   },
 
   render() {
-    if (this.state.grades.length === 0) {
+    if (this.props.grades.length === 0) {
       return(
-        <h1>Loading...</h1>
+        <h1>No Grades Available...</h1>
       )
     } else {
       return(
@@ -70,7 +44,7 @@ var Results = React.createClass({
               </tr>
             </thead>
             <tbody>
-              {this.state.grades.map(grade => {
+              {this.props.grades.map(grade => {
                 var linkString = "/quizzes/" + grade.slug;
                 return(
                   <tr key={grade.dateHash}>

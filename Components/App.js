@@ -42,7 +42,8 @@ var App = React.createClass({
 			user: "",
 			token: "",
 			errMsg: "",
-			quizzes: []
+			quizzes: [],
+			grades: []
 		}
 	},
 
@@ -65,6 +66,30 @@ var App = React.createClass({
 		this.setState({user:"", token:""});
 	},
 
+	handleDeleteRequest(dateHash) {
+		$.ajax({
+			url: 'api/delete/' + dateHash + '/' + this.state.token,
+			dataType: 'json',
+			method: "GET",
+			success: function(data) {
+				$.ajax({
+					url: 'api/results/' + this.state.token,
+					dataType: 'json',
+					method: "GET",
+					success: function(data) {
+						this.setState({grades: data});
+					}.bind(this),
+					error: function(xhr, status, err) {
+						console.error(status, err.toString());
+					}.bind(this)
+				});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(status, err.toString());
+			}.bind(this)
+		});
+	},
+
 	handleLoginSubmission(loginObj) {
 		$.ajax({
 		  url: "api/login",
@@ -73,6 +98,17 @@ var App = React.createClass({
 		  data: {email: loginObj.email, password: loginObj.password},
 		  success: function(data) {
 		    this.setState({token:data.token, errMsg:data.error, user:loginObj.email});
+				$.ajax({
+					url: 'api/results/' + this.state.token,
+					dataType: 'json',
+					method: "GET",
+					success: function(data) {
+						this.setState({grades: data});
+					}.bind(this),
+					error: function(xhr, status, err) {
+						console.error(status, err.toString());
+					}.bind(this)
+				});
 		  }.bind(this),
 		  error: function(xhr, status, err) {
 		    console.error(status, err.toString());
@@ -89,7 +125,9 @@ var App = React.createClass({
 						{
 							tokenState: this.state.token,
 							quizzes: this.state.quizzes,
-							onLoginFormSubmit: this.handleLoginSubmission})}
+							grades: this.state.grades,
+							onLoginFormSubmit: this.handleLoginSubmission,
+							onDeleteRequest: this.handleDeleteRequest})}
 				<Footer />
 			</div>
 		)
