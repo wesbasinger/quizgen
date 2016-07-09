@@ -1,6 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 
+
 var Quiz = React.createClass({
 
 	getInitialState() {
@@ -92,7 +93,7 @@ var Quiz = React.createClass({
 					<p>Number Correct: {this.state.resultObj.numCorrect}</p>
 					{this.state.resultObj.pairs.map(pair => {
 						return(
-							<div>
+							<div key={pair.question}>
 								<p>Question: {pair.question}</p>
 								<p>Result: {pair.result}</p>
 							</div>
@@ -117,8 +118,8 @@ var Quiz = React.createClass({
 								<h3>{question.caption}</h3>
 								{question.choices.map(choice => {
 									return(
-										<div>
-											<input type="radio" name={question.text} value={choice} onChange={this.handleChange} key={choice}/>
+										<div key={choice}>
+											<input type="radio" name={question.text} value={choice} onChange={this.handleChange}/>
 											<label>{choice}</label>
 										</div>
 									)
