@@ -27,9 +27,11 @@ var Login = React.createClass({
   render() {
     if (this.props.tokenState === "") {
       return(
-        <div>
+        <div className="jumbotron">
           <h1>Please Login to Continue</h1>
-          <form onSubmit={this.handleSubmission}>
+          <div className="well">
+          <form role="form" onSubmit={this.handleSubmission}>
+            <div className="form-group">
             <label>Email</label>
             <input
               type="text"
@@ -37,6 +39,8 @@ var Login = React.createClass({
               name="email"
               onChange={this.handleEmailChange}
               value={this.state.formEmail}/>
+            </div>
+            <div className="form-group">
             <label>Password</label>
             <input
               type="password"
@@ -44,13 +48,17 @@ var Login = React.createClass({
               name="password"
               onChange={this.handlePasswordChange}
               value={this.state.formPassword}/>
-            <input type="submit" value="POST" />
+            </div>
+            <input className="btn btn-primary" type="submit" value="POST" />
           </form>
+          </div>
         </div>
       )
     } else {
       return(
+        <div className="alert alert-success jumbotron">
         <h1>Welcome to the quiz app.  Use the nav bar.</h1>
+        </div>
       )
     }
   }

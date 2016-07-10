@@ -26,13 +26,17 @@ var Results = React.createClass({
   render() {
     if (this.props.grades.length === 0) {
       return(
+        <div className="jumbotron">
         <h1>No Grades Available...</h1>
+        </div>
       )
     } else {
       return(
         <div>
+          <div className="jumbotron">
           <h1>Grades</h1>
-          <table>
+          </div>
+          <table className="table table-striped">
             <thead>
               <tr>
                 <td>Link</td>
@@ -53,7 +57,7 @@ var Results = React.createClass({
                     <td>{grade.numQuestions}</td>
                     <td>{grade.numCorrect}</td>
                     <td>{grade.percentage}</td>
-                    <td><button onClick={this.handleDelete} value={grade.dateHash}>Delete</button></td>
+                    <td><button className="btn btn-danger" onClick={this.handleDelete} value={grade.dateHash}>Delete</button></td>
                   </tr>
                 )
               })}

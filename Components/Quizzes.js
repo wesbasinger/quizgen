@@ -5,8 +5,10 @@ var Quizzes = React.createClass({
 	render() {
 		return(
 			<div>
+				<div className="jumbotron">
 				<h1>All Quizzes</h1>
-				<table>
+				</div>
+				<table className="table table-striped">
 					<thead>
 						<tr>
 							<td>Link</td>

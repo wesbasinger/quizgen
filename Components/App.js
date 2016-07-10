@@ -7,14 +7,18 @@ var Header = React.createClass({
 		if (this.props.token && this.props.user) {
 			return(
 				<div>
-					<nav>
+					<nav className="navbar navbar-default">
+						<div className="container-fluid">
+						<div className="navbar-header">
 						Welcome {this.props.user}.  You are logged in.
-							Pick from the list
-							<ul>
+							Pick from the list.
+						</div>
+							<ul className="nav navbar-nav">
 								<li><Link to="/quizzes">Quizzes</Link></li>
 								<li><Link to="/results">Grades</Link></li>
-								<li><button onClick={this.props.onLogoutRequest}>Logout</button></li>
+								<li><button className="btn btn-primary" onClick={this.props.onLogoutRequest}>Logout</button></li>
 							</ul>
+						</div>
 					</nav>
 				</div>
 			)
