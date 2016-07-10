@@ -59,30 +59,43 @@ var Quiz = React.createClass({
 				console.error(status, err.toString());
 			}.bind(this)
 		});
-		this.setState({responseObj: {}, submitted: true})
+		this.setState({submitted: true})
 	},
 
-	handleSaveResult(e) {
-		$.ajax({
-			url: 'api/save/' + this.props.tokenState,
-			dataType: 'json',
-			method: "POST",
-			data: {
-				dateHash: this.state.resultObj.dateHash,
-				numCorrect: this.state.resultObj.numCorrect,
-				numQuestions: this.state.resultObj.numQuestions,
-				percentage: this.state.resultObj.percentage,
-				slug: this.state.resultObj.slug,
-				timestamp: this.state.resultObj.timestamp
-			},
-			success: function(data) {
-				this.setState({saved: true});
-			}.bind(this),
-			error: function(xhr, status, err) {
-				console.error(status, err.toString());
-			}.bind(this)
+	handleSave(e) {
+		this.setState({saved:true})
+		this.props.onSaveRequest({
+			slug: this.state.resultObj.slug,
+			numCorrect: this.state.resultObj.numCorrect,
+			numQuestions: this.state.resultObj.numQuestions,
+			dateHash: this.state.resultObj.numQuestions,
+			percentage: this.state.resultObj.percentage,
+			timestamp: this.state.resultObj.timestamp
 		});
+		this.setState({responseObj: {}, resultObj: {}})
 	},
+
+	// handleSaveResult(e) {
+	// 	$.ajax({
+	// 		url: 'api/save/' + this.props.tokenState,
+	// 		dataType: 'json',
+	// 		method: "POST",
+	// 		data: {
+	// 			dateHash: this.state.resultObj.dateHash,
+	// 			numCorrect: this.state.resultObj.numCorrect,
+	// 			numQuestions: this.state.resultObj.numQuestions,
+	// 			percentage: this.state.resultObj.percentage,
+	// 			slug: this.state.resultObj.slug,
+	// 			timestamp: this.state.resultObj.timestamp
+	// 		},
+	// 		success: function(data) {
+	// 			this.setState({saved: true});
+	// 		}.bind(this),
+	// 		error: function(xhr, status, err) {
+	// 			console.error(status, err.toString());
+	// 		}.bind(this)
+	// 	});
+	// },
 
 	rawMarkup(expression) {
 		if(expression==null) {
@@ -114,7 +127,7 @@ var Quiz = React.createClass({
 							</div>
 						)
 					})}
-					<button onClick={this.handleSaveResult}>Save Result</button>
+					<button onClick={this.handleSave}>Save Result</button>
 				</div>
 			)
 		} else if (this.state.submitted===true && this.state.saved===true) {

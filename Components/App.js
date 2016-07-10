@@ -116,6 +116,31 @@ var App = React.createClass({
 		});
 	},
 
+	handleSaveResult(responseObj) {
+		$.ajax({
+			url: 'api/save/' + this.state.token,
+			dataType: 'json',
+			method: "POST",
+			data: responseObj,
+			success: function(data) {
+				$.ajax({
+					url: 'api/results/' + this.state.token,
+					dataType: 'json',
+					method: "GET",
+					success: function(data) {
+						this.setState({grades: data});
+					}.bind(this),
+					error: function(xhr, status, err) {
+						console.error(status, err.toString());
+					}.bind(this)
+				});
+			}.bind(this),
+			error: function(xhr, status, err) {
+				console.error(status, err.toString());
+			}.bind(this)
+		});
+	},
+
 	render() {
 		return(
 			<div>
@@ -127,6 +152,7 @@ var App = React.createClass({
 							quizzes: this.state.quizzes,
 							grades: this.state.grades,
 							onLoginFormSubmit: this.handleLoginSubmission,
+							onSaveRequest: this.handleSaveResult,
 							onDeleteRequest: this.handleDeleteRequest})}
 				<Footer />
 			</div>
