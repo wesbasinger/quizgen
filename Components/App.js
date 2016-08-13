@@ -26,7 +26,7 @@ var Header = React.createClass({
 			return(
 				<div>
 					<nav>
-						Login to see options.
+						<a href="/">Login</a> to see options.
 					</nav>
 				</div>
 			)
