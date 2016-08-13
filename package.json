@@ -4,6 +4,7 @@
   "description": "Trying this out in React.",
   "main": "app.js",
   "scripts": {
+    "postinstall": "webpack",
     "start": "node app.js",
     "interface": "node interface.js"
   },
@@ -18,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "jquery": "^3.1.0",
     "jsonwebtoken": "^7.0.1",
     "katex": "git+https://github.com/wesbasinger/KaTeX.git",
     "mongodb": "^2.1.18",

@@ -103,7 +103,7 @@ module.exports = {
       } else {
         db.collection('users')
         .aggregate([
-          {$match:{email:"wbasinger@villagetechschools.org"}},
+          {$match:{email:passedEmail}},
           {$unwind:"$results"},
           {$project:
             {

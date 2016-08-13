@@ -68,7 +68,7 @@ var Quiz = React.createClass({
 			slug: this.state.resultObj.slug,
 			numCorrect: this.state.resultObj.numCorrect,
 			numQuestions: this.state.resultObj.numQuestions,
-			dateHash: this.state.resultObj.numQuestions,
+			dateHash: this.state.resultObj.dateHash,
 			percentage: this.state.resultObj.percentage,
 			timestamp: this.state.resultObj.timestamp
 		});
