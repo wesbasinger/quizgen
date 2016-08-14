@@ -46027,9 +46027,13 @@
 									'li',
 									null,
 									React.createElement(
-										'button',
-										{ className: 'btn btn-primary', onClick: this.props.onLogoutRequest },
-										'Logout'
+										Link,
+										{ to: '/' },
+										React.createElement(
+											'button',
+											{ className: 'btn btn-primary', onClick: this.props.onLogoutRequest },
+											'Logout'
+										)
 									)
 								)
 							)
@@ -46043,7 +46047,12 @@
 					React.createElement(
 						'nav',
 						null,
-						'Login to see options.'
+						React.createElement(
+							'a',
+							{ href: '/' },
+							'Login'
+						),
+						' to see options.'
 					)
 				);
 			}
@@ -46056,7 +46065,7 @@
 			return React.createElement(
 				'nav',
 				null,
-				'This is a footer'
+				'Site created and maintained by Wes Basinger | wbasinger@villagetechschools.org'
 			);
 		}
 	});
@@ -46252,7 +46261,7 @@
 	                onChange: this.handlePasswordChange,
 	                value: this.state.formPassword })
 	            ),
-	            React.createElement("input", { className: "btn btn-primary", type: "submit", value: "POST" })
+	            React.createElement("input", { className: "btn btn-primary", type: "submit", value: "Login" })
 	          )
 	        )
 	      );

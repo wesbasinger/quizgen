@@ -16,7 +16,7 @@ var Header = React.createClass({
 							<ul className="nav navbar-nav">
 								<li><Link to="/quizzes">Quizzes</Link></li>
 								<li><Link to="/results">Grades</Link></li>
-								<li><button className="btn btn-primary" onClick={this.props.onLogoutRequest}>Logout</button></li>
+								<li><Link to="/"><button className="btn btn-primary" onClick={this.props.onLogoutRequest}>Logout</button></Link></li>
 							</ul>
 						</div>
 					</nav>
@@ -36,7 +36,7 @@ var Header = React.createClass({
 
 var Footer = React.createClass({
 	render() {
-		return <nav>This is a footer</nav>
+		return <nav>Site created and maintained by Wes Basinger | wbasinger@villagetechschools.org</nav>
 	}
 })
 var App = React.createClass({

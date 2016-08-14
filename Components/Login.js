@@ -49,7 +49,7 @@ var Login = React.createClass({
               onChange={this.handlePasswordChange}
               value={this.state.formPassword}/>
             </div>
-            <input className="btn btn-primary" type="submit" value="POST" />
+            <input className="btn btn-primary" type="submit" value="Login" />
           </form>
           </div>
         </div>
