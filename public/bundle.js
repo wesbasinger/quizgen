@@ -46174,6 +46174,7 @@
 				null,
 				React.createElement(Header, { token: this.state.token, user: this.state.user, onLogoutRequest: this.logout }),
 				React.cloneElement(this.props.children, {
+					errMsg: this.state.errMsg,
 					tokenState: this.state.token,
 					quizzes: this.state.quizzes,
 					grades: this.state.grades,
@@ -46191,12 +46192,13 @@
 /* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
+	var Link = __webpack_require__(175).Link;
 
 	var Login = React.createClass({
-	  displayName: "Login",
+	  displayName: 'Login',
 	  getInitialState: function getInitialState() {
 	    return {
 	      formEmail: "",
@@ -46218,61 +46220,76 @@
 	  render: function render() {
 	    if (this.props.tokenState === "") {
 	      return React.createElement(
-	        "div",
-	        { className: "jumbotron" },
+	        'div',
+	        { className: 'jumbotron' },
 	        React.createElement(
-	          "h1",
+	          'h1',
 	          null,
-	          "Please Login to Continue"
+	          'Please Login to Continue'
 	        ),
 	        React.createElement(
-	          "div",
-	          { className: "well" },
+	          'div',
+	          { className: 'well' },
 	          React.createElement(
-	            "form",
-	            { role: "form", onSubmit: this.handleSubmission },
+	            'form',
+	            { role: 'form', onSubmit: this.handleSubmission },
 	            React.createElement(
-	              "div",
-	              { className: "form-group" },
+	              'div',
+	              { className: 'form-group' },
 	              React.createElement(
-	                "label",
+	                'label',
 	                null,
-	                "Email"
+	                'Email'
 	              ),
-	              React.createElement("input", {
-	                type: "text",
+	              React.createElement('input', {
+	                type: 'text',
 	                required: true,
-	                name: "email",
+	                name: 'email',
 	                onChange: this.handleEmailChange,
 	                value: this.state.formEmail })
 	            ),
 	            React.createElement(
-	              "div",
-	              { className: "form-group" },
+	              'div',
+	              { className: 'form-group' },
 	              React.createElement(
-	                "label",
+	                'label',
 	                null,
-	                "Password"
+	                'Password'
 	              ),
-	              React.createElement("input", {
-	                type: "password",
+	              React.createElement('input', {
+	                type: 'password',
 	                required: true,
-	                name: "password",
+	                name: 'password',
 	                onChange: this.handlePasswordChange,
 	                value: this.state.formPassword })
 	            ),
-	            React.createElement("input", { className: "btn btn-primary", type: "submit", value: "Login" })
+	            React.createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Login' })
 	          )
+	        )
+	      );
+	    } else if (this.props.errMsg) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'p',
+	          null,
+	          this.props.errMsg
+	        ),
+	        React.createElement(
+	          Link,
+	          { to: 'http://quizbe.herokuapp.com' },
+	          'Try Again'
 	        )
 	      );
 	    } else {
 	      return React.createElement(
-	        "div",
-	        { className: "alert alert-success jumbotron" },
+	        'div',
+	        { className: 'alert alert-success jumbotron' },
 	        React.createElement(
-	          "h1",
+	          'h1',
 	          null,
-	          "Welcome to the quiz app.  Use the nav bar."
+	          'Welcome to the quiz app.  Use the nav bar.'
 	        )
 	      );
 	    }

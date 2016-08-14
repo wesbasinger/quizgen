@@ -61,7 +61,7 @@ app.post('/api/quiz/:slug/:jwt', function(req, res, next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
+				res.json({error: "Failed to authenicate token."});
 			} else {
 				api.gradeQuiz(req.params.slug, req.body, function(passedResult) {
 					res.json(passedResult);
@@ -77,7 +77,7 @@ app.post('/api/save/:jwt', function(req, res, next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
+				res.json({error: "Failed to authenicate token."});
 			} else {
 				api.pushResults(decoded.email, req.body, function() {
 					res.json({msg: "success"});
@@ -92,7 +92,7 @@ app.get('/api/results/:jwt', function(req, res, next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
+				res.json({errMsg: "Failed to authenicate token."});
 			} else {
 					api.getResults(decoded.email, function(docs) {
 						res.json(docs);
@@ -107,7 +107,7 @@ app.get('/api/delete/:dateHash/:jwt', function(req, res, next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err, decoded) {
 			if (err) {
-				res.render('notFound', {error: "Failed to authenicate token."});
+				res.json({error: "Failed to authenicate token."});
 			} else {
 					api.deleteResult(decoded.email, req.params.dateHash, function(){
 						res.json({msg:"success"});

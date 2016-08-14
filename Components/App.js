@@ -152,6 +152,7 @@ var App = React.createClass({
 				{
 					React.cloneElement(this.props.children,
 						{
+							errMsg: this.state.errMsg,
 							tokenState: this.state.token,
 							quizzes: this.state.quizzes,
 							grades: this.state.grades,

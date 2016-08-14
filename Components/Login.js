@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 
 var Login = React.createClass({
 
@@ -52,6 +53,13 @@ var Login = React.createClass({
             <input className="btn btn-primary" type="submit" value="Login" />
           </form>
           </div>
+        </div>
+      )
+    } else if (this.props.errMsg) {
+      return(
+        <div>
+          <p>{this.props.errMsg}</p>
+          <a href="/">Try Again</a>
         </div>
       )
     } else {
